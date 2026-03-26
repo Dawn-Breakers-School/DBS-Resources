@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dawn Breaker School – Students' Daily Handbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9953B;
+    --gold-light: #E8B96A;
+    --gold-pale: #F9EDD3;
+    --navy: #0F1F3D;
+    --navy-mid: #1A3260;
+    --navy-light: #2A4A7F;
+    --cream: #FAF6EE;
+    --text: #1A1A2E;
+    --muted: #6B7280;
+    --white: #FFFFFF;
+    --shadow: 0 8px 32px rgba(15,31,61,0.12);
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, var(--navy-light) 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 48px 24px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,149,59,0.18) 0%, transparent 70%);
+  }
+  .header-badge {
+    display: inline-block;
+    border: 2px solid var(--gold);
+    border-radius: 50px;
+    padding: 5px 20px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    position: relative;
+  }
+  .header h1 span { color: var(--gold-light); }
+  .header-sub {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    position: relative;
+  }
+  .gold-line {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 2px;
+    margin: 20px auto 0;
+    position: relative;
+  }
+
+  /* ── TABS ── */
+  .tab-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 28px 24px 0;
+    background: var(--cream);
+  }
+  .tab-btn {
+    padding: 12px 36px;
+    border: 2px solid transparent;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.25s ease;
+    color: var(--muted);
+  }
+  .tab-btn:hover { color: var(--navy); }
+  .tab-btn.active {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+    box-shadow: 0 4px 16px rgba(15,31,61,0.25);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── SECTION CARDS ── */
+  .section-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(201,149,59,0.12);
+    transition: box-shadow 0.2s;
+  }
+  .section-card:hover { box-shadow: 0 12px 40px rgba(15,31,61,0.16); }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: var(--white);
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-header .icon {
+    width: 38px; height: 38px;
+    background: rgba(201,149,59,0.18);
+    border: 1.5px solid var(--gold);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card-header-text { flex: 1; }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .card-time {
+    font-size: 12px;
+    color: var(--gold-light);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+  }
+  .card-chevron {
+    font-size: 18px;
+    color: var(--gold-light);
+    transition: transform 0.25s;
+  }
+  .section-card.open .card-chevron { transform: rotate(180deg); }
+
+  .card-body {
+    padding: 0 24px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+  }
+  .section-card.open .card-body {
+    max-height: 800px;
+    padding: 20px 24px 22px;
+  }
+
+  /* Period cards (simple, no accordion) */
+  .period-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-left: 5px solid var(--gold);
+    border-top: 1px solid rgba(201,149,59,0.12);
+    border-right: 1px solid rgba(201,149,59,0.12);
+    border-bottom: 1px solid rgba(201,149,59,0.12);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 24px;
+  }
+  .period-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--gold);
+    min-width: 32px;
+    line-height: 1;
+  }
+  .period-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .period-time {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-top: 2px;
+  }
+
+  /* ── LIST STYLES ── */
+  .list-section { margin-top: 12px; }
+  .list-section h4 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid var(--gold-pale);
+  }
+  ul.styled {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  ul.styled li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  ul.styled li::before {
+    content: '›';
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: -1px;
+  }
+
+  .dos-donts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  @media (max-width: 560px) { .dos-donts { grid-template-columns: 1fr; } }
+
+  .dos, .donts {
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .dos { background: #EDFAF3; }
+  .donts { background: #FEF2F2; }
+  .dos h4 { color: #16A34A; border-color: #BBF7D0; }
+  .donts h4 { color: #DC2626; border-color: #FECACA; }
+  .dos ul.styled li::before { color: #16A34A; }
+  .donts ul.styled li::before { color: #DC2626; }
+
+  .note-box {
+    background: var(--gold-pale);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--navy-mid);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* ── COMING SOON (Primary) ── */
+  .coming-soon {
+    text-align: center;
+    padding: 72px 24px;
+    color: var(--muted);
+  }
+  .coming-soon .big-icon { font-size: 56px; margin-bottom: 16px; }
+  .coming-soon h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .coming-soon p { font-size: 14px; }
+
+  /* ── SECTION GROUP LABEL ── */
+  .group-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 0 14px;
+  }
+  .group-label span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .group-label::before, .group-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-pale), transparent);
+  }
+  .group-label::after { background: linear-gradient(270deg, var(--gold-pale), transparent); }
+
+  /* ── PERIODS GRID ── */
+  .periods-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 500px) { .periods-grid { grid-template-columns: 1fr; } }
+  .periods-grid .period-card { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-badge">Academic Year 2025–26</div>
+  <h1><span>Dawn Breaker</span> School</h1>
+  <p class="header-sub">Students' Daily Handbook</p>
+  <div class="gold-line"></div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn" onclick="switchTab('primary')">Primary Section</button>
+  <button class="tab-btn active" onclick="switchTab('secondary')">Secondary Section</button>
+</nav>
+
+<main class="content">
+
+  <!-- PRIMARY TAB -->
+  <div class="tab-panel" id="tab-primary">
+    <div class="coming-soon">
+      <div class="big-icon">📚</div>
+      <h3>Primary Section</h3>
+      <p>Content for the Primary Section is coming soon.<br>Please check back later.</p>
+    </div>
+  </div>
+
+  <!-- SECONDARY TAB -->
+  <div class="tab-panel active" id="tab-secondary">
+
+    <div class="group-label"><span>General Timings &amp; Flow</span></div>
+
+    <!-- Arrival -->
+    <div class="section-card open">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="icon">🚪</div>
+        <div class="card-header-text">
+          <div class="card-title">Arrival &amp; Reporting</div>
+          <div class="card-time">Teachers: 7:50 – 8:00 a.m. &nbsp;|&nbsp; Students: 8:00 – 8:10 a.m.</div>
+        </div>
+        <div class="card-chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="list-section">
+          <h4>Instructions</h4>
+          <ul class="styled">
+            <li>Students must not arrive before 8:00 a.m.</li>
+            <li>Enter through designated gates upon arrival</li>
+            <li>Keep bags in classrooms</li>
+            <li>Assemble and line up as per timetable (class / group / combined assembly)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assembly -->
+    <div class="section-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="icon">🎗️</div>
+        <div class="card-header-text">
+          <div class="card-title">Morning Assembly</div>
+          <div class="card-time">8:10 a.m. – 8:25 a.m.</div>
+        </div>
+        <div class="card-chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <ul class="styled">
+          <li>All students participate in the morning assembly</li>
+          <li>Maintain silence and discipline throughout</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Class Check -->
+    <div class="section-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="icon">🪞</div>
+        <div class="card-header-text">
+          <div class="card-title">Class Check &amp; Interaction</div>
+          <div class="card-time">8:25 a.m. – 8:40 a.m.</div>
+        </div>
+        <div class="card-chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="list-section">
+          <h4>Focus Areas</h4>
+          <ul class="styled">
+            <li>Personal appearance</li>
+            <li>Hair, nails &amp; shoes</li>
+            <li>Cleanliness &amp; hygiene</li>
+            <li>Short interaction with class teacher</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Academic Periods -->
+    <div class="group-label"><span>Academic Periods</span></div>
+    <div class="periods-grid">
+      <div class="period-card">
+        <div class="period-num">1</div>
+        <div>
+          <div class="period-label">Period</div>
+          <div class="period-time">8:40 – 9:30 a.m.</div>
+        </div>
+      </div>
+      <div class="period-card">
+        <div class="period-num">2</div>
+        <div>
+          <div class="period-label">Period</div>
+          <div class="period-time">9:30 – 10:20 a.m.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recess 1 -->
+    <div class="section-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="icon">🥪</div>
+        <div class="card-header-text">
+          <div class="card-title">Recess Break 1</div>
+          <div class="card-time">10:20 a.m. – 10:40 a.m. &nbsp;(20 minutes)</div>
+        </div>
+        <div class="card-chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="list-section">
+          <h4>Purpose</h4>
+          <ul class="styled">
+            <li>Washroom use</li>
+            <li>Eat tiffin</li>
+            <li>Relax</li>
+          </ul>
+        </div>
+        <div class="dos-donts">
+          <div class="dos">
+            <h4>✅ Do's</h4>
+            <ul class="styled">
+              <li>Maintain discipline</li>
+              <li>Use washrooms properly</li>
+              <li>Sit and eat peacefully</li>
+              <li>Keep surroundings clean</li>
+            </ul>
+          </div>
+          <div class="donts">
+            <h4>🚫 Don'ts</h4>
+            <ul class="styled">
+              <li>Do not run or shout</li>
+              <li>Do not fight or argue</li>
+              <li>Do not use inappropriate language</li>
+              <li>Avoid unwanted behavior</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Periods 3 & 4 -->
+    <div class="periods-grid">
+      <div class="period-card">
+        <div class="period-num">3</div>
+        <div>
+          <div class="period-label">Period</div>
+          <div class="period-time">10:40 – 11:30 a.m.</div>
+        </div>
+      </div>
+      <div class="period-card">
+        <div class="period-num">4</div>
+        <div>
+          <div class="period-label">Period</div>
+          <div class="period-time">11:30 a.m. – 12:20 p.m.</div>
+        </div>
+      </div>
+    </div>
+    <div class="note-box">⚠️ Students must line up immediately after the recess bell. Avoid being late to class.</div>
+
+    <!-- Recess 2 -->
+    <div class="section-card" style="margin-top:20px">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="icon">🌿</div>
+        <div class="card-header-text">
+          <div class="card-title">Recess Break 2</div>
+          <div class="card-time">12:20 p.m. – 12:40 p.m. &nbsp;(20 minutes)</div>
+        </div>
+        <div class="card-chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="dos-donts">
+          <div class="dos">
+            <h4>✅ Do's</h4>
+            <ul class="styled">
+              <li>Eat tiffin properly</li>
+              <li>Dispose waste in bins</li>
+              <li>Keep campus clean</li>
+              <li>Pick up any litter created</li>
+            </ul>
+          </div>
+          <div class="donts">
+            <h4>🚫 Don'ts</h4>
+            <ul class="styled">
+              <li>No littering</li>
+              <li>Do not waste food</li>
+              <li>No ragging or bullying</li>
+              <li>No misbehavior</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Periods 5 & 6 -->
+    <div class="periods-grid" style="margin-top:20px">
+      <div class="period-card">
+        <div class="period-num">5</div>
+        <div>
+          <div class="period-label">Period</div>
+          <div class="period-time">12:40 – 1:30 p.m.</div>
+        </div>
+      </div>
+      <div class="period-card">
+        <div class="period-num">6</div>
+        <div>
+          <div class="period-label">Period</div>
+          <div class="period-time">1:30 – 2:20 p.m.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dispersal -->
+    <div class="section-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="icon">🏠</div>
+        <div class="card-header-text">
+          <div class="card-title">Class Assembly &amp; Dispersal</div>
+          <div class="card-time">2:20 p.m. – 2:50 p.m.</div>
+        </div>
+        <div class="card-chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="list-section">
+          <h4>Purpose</h4>
+          <ul class="styled">
+            <li>Note homework for the day</li>
+            <li>Receive important announcements</li>
+            <li>Pack school bags properly</li>
+            <li>Clean and tidy the classroom</li>
+            <li>Ensure nothing is left behind</li>
+          </ul>
+        </div>
+        <div class="list-section" style="margin-top:14px">
+          <h4>Exit Process</h4>
+          <ul class="styled">
+            <li>Students line up class-wise</li>
+            <li>Proceed to respective gates</li>
+            <li>Leave school in an orderly manner</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-secondary -->
+</main>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function toggleCard(header) {
+    const card = header.closest('.section-card');
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
