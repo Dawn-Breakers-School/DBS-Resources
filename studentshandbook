@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dawn Breaker School - Students’ Daily Handbook</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f7fa;
+        color: #333;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    h1, h2 {
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    .tabs {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        background: #ddd;
+        border: none;
+        margin: 0 5px;
+        border-radius: 6px;
+        font-weight: bold;
+    }
+
+    .tab.active {
+        background: #2c7be5;
+        color: white;
+    }
+
+    .section {
+        display: none;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .section.active {
+        display: block;
+    }
+
+    .card {
+        margin-bottom: 20px;
+        padding: 15px;
+        border-left: 5px solid #2c7be5;
+        background: #fafafa;
+        border-radius: 6px;
+    }
+
+    .card h3 {
+        margin-top: 0;
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+
+    .do {
+        color: green;
+    }
+
+    .dont {
+        color: red;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Dawn Breaker School</h1>
+    <h2>Students’ Daily Handbook</h2>
+
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('primary')">Primary Section</button>
+        <button class="tab" onclick="showTab('secondary')">Secondary Section</button>
+    </div>
+
+    <!-- PRIMARY (Placeholder) -->
+    <div id="primary" class="section active">
+        <div class="card">
+            <h3>Primary Section</h3>
+            <p>Content for primary section can be added here.</p>
+        </div>
+    </div>
+
+    <!-- SECONDARY -->
+    <div id="secondary" class="section">
+
+        <div class="card">
+            <h3>Arrival & Reporting</h3>
+            <p><strong>Teachers:</strong> 7:50 a.m. – 8:00 a.m.</p>
+            <p><strong>Students:</strong> 8:00 a.m. – 8:10 a.m.</p>
+            <ul>
+                <li>Do not arrive before 8:00 a.m.</li>
+                <li>Enter through gates and keep bags in class</li>
+                <li>Line up as per assembly schedule</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Morning Assembly</h3>
+            <p>8:10 a.m. – 8:25 a.m.</p>
+        </div>
+
+        <div class="card">
+            <h3>Class Check & Interaction</h3>
+            <p>8:25 a.m. – 8:40 a.m.</p>
+            <ul>
+                <li>Appearance, hygiene, nails, shoes check</li>
+                <li>Interaction with teacher</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Academic Periods</h3>
+            <p><strong>Period 1:</strong> 8:40 – 9:30</p>
+            <p><strong>Period 2:</strong> 9:30 – 10:20</p>
+        </div>
+
+        <div class="card">
+            <h3>Recess 1 (10:20 – 10:40)</h3>
+            <p><strong>Purpose:</strong> Eat, relax, washroom</p>
+
+            <p class="do"><strong>Do’s:</strong></p>
+            <ul>
+                <li>Maintain discipline</li>
+                <li>Eat properly</li>
+                <li>Keep area clean</li>
+            </ul>
+
+            <p class="dont"><strong>Don’ts:</strong></p>
+            <ul>
+                <li>No running or shouting</li>
+                <li>No fighting</li>
+                <li>No inappropriate behavior</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Period 3 & 4</h3>
+            <p><strong>Period 3:</strong> 10:40 – 11:30</p>
+            <p><strong>Period 4:</strong> 11:30 – 12:20</p>
+            <p><em>Line up immediately after recess bell</em></p>
+        </div>
+
+        <div class="card">
+            <h3>Recess 2 (12:20 – 12:40)</h3>
+
+            <p class="do"><strong>Do’s:</strong></p>
+            <ul>
+                <li>Dispose waste properly</li>
+                <li>Keep campus clean</li>
+                <li>Eat tiffin</li>
+            </ul>
+
+            <p class="dont"><strong>Don’ts:</strong></p>
+            <ul>
+                <li>No littering</li>
+                <li>No wasting food</li>
+                <li>No bullying or ragging</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Final Periods</h3>
+            <p><strong>Period 5:</strong> 12:40 – 1:30</p>
+            <p><strong>Period 6:</strong> 1:30 – 2:20</p>
+        </div>
+
+        <div class="card">
+            <h3>Class Assembly & Dispersal (2:20 – 2:50)</h3>
+            <ul>
+                <li>Note homework</li>
+                <li>Clean classroom</li>
+                <li>Pack bags properly</li>
+                <li>Line up and exit systematically</li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function showTab(tabId) {
+    const sections = document.querySelectorAll('.section');
+    const tabs = document.querySelectorAll('.tab');
+
+    sections.forEach(sec => sec.classList.remove('active'));
+    tabs.forEach(tab => tab.classList.remove('active'));
+
+    document.getElementById(tabId).classList.add('active');
+    event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
